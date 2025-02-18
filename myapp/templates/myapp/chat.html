@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - DrugWise AI</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/styles.css' %}">
+</head>
+<body>
+    <div class="chat-container">
+        <h1>DrugWise AI</h1>
+        <p>Your Safety, Your Choices</p>
+
+        <div class="chat-box">
+            <div class="messages" id="messages">
+            
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type a message...">
+            <button class="send-btn">Send</button>
+        </div>
+    </div>
+</body>
+</html>

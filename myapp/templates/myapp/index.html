@@ -1,0 +1,27 @@
+<!--loads the static file -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrugWise AI - Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Introduction to</h1>
+        <h2>DrugWiseAI</h2>
+        <p>Your Safety, Your Choices</p>
+        
+        <form>
+            <input type="text" placeholder="Username">
+            <input type="password" placeholder="Password">
+            <button class="login-btn">Login</button>
+            <button class="create-btn">Create Account</button>
+        </form>
+        <a href="{% url 'chat' %}">Go to Chat</a>
+
+    </div>
+</body>
+</html>
