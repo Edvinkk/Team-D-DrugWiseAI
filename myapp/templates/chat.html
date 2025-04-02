@@ -12,16 +12,47 @@
         <h1>DrugWise AI</h1>
         <p>Your Safety, Your Choices</p>
 
-        <div class="chat-box">
-            <div class="messages" id="messages">
-            
-            </div>
-        </div>
+        <div class="chat-box" id="messages"> </div>
 
         <div class="chat-input">
             <input type="text" id="userInput" placeholder="Type a message...">
             <button class="send-btn">Send</button>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputField = document.getElementById("userInput");
+            const sendButton = document.querySelector(".send-btn");
+            const messagesContainer = document.getElementById("messages");
+
+            //append messages to the chat box
+            function appendMessage(sender, text) {
+                const msgDiv = document.createElement("div");
+                msgDiv.textContent = sender + ": " + text;
+                messagesContainer.appendChild(msgDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight; //autoscroll to last mesgae
+            }
+
+            //Event listener for the send button
+            sendButton.addEventListener("click", function () {
+                const message = inputField.value.trim();
+                if (!message) return; // Don't send empty messages
+
+                appendMessage("You", message);// Display the users message
+                inputField.value = ""; // Clear the input field
+
+                //Send the user's message to the Django API
+                fetch("/chat_api/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: message }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => appendMessage("DrugWiseAI", data.response)) // Display the bot's response
+                    .catch(() => appendMessage("DrugWiseAI", "Sorry, there was an error.")); // Handle errors
+            });
+        });
+    </script>
 </body>
 </html>
