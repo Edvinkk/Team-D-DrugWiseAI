@@ -3,10 +3,9 @@ from django.http import JsonResponse  #Sends JSON responses
 from django.shortcuts import render, redirect  #import For rendering templates and redirections
 from django.views.decorators.csrf import csrf_exempt  #Disables CSRF for testing purposes
 from django.contrib.auth.hashers import make_password, check_password  #import for Secure password handling
-from .models import User  #Importing the MongoDB User model
+from .models import User  #Importing the MongoDB User model and chat
 import openai
 import os
-
 
 
 @csrf_exempt
@@ -15,7 +14,10 @@ def chat_api(request):
         try:
             data = json.loads(request.body)
             user_message = data.get("message", "")
-            openai.api_key=os.getenv("OPENAI_API_KEY")
+        
+
+            openai.api_key=os.getenv("OPENAI_API_KEY")  
+            print("OpenAI Key:", openai.api_key)#debugging line
 
 
             response = openai.ChatCompletion.create(
@@ -31,7 +33,9 @@ def chat_api(request):
             
 
 
-            bot_reply = response.choices[0].message.content
+            bot_reply = response.choices[0].message['content']
+
+            
             return JsonResponse({"response": bot_reply})
 
         except Exception as e:
